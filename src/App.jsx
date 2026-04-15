@@ -8,7 +8,8 @@ import {
 import { useForm } from 'react-hook-form';
 import emailjs from 'emailjs-com';
 import profileImg from './assets/profile.jpg';
-import resumePDF from './assets/resume.pdf';
+import bakeryImg from './assets/bakery.png';
+import passwordImg from './assets/password.png';
 
 const Linkedin = ({ size = 20 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -57,6 +58,7 @@ const PORTFOLIO_DATA = {
       description: "A modern bakery website with interactive UI, product showcase, and responsive design.",
       tech: ["HTML", "CSS", "JavaScript"],
       demoLink: "https://whisk-backery.vercel.app/",
+      image: bakeryImg,
       color: "from-amber-400 to-orange-500"
     },
     {
@@ -64,6 +66,7 @@ const PORTFOLIO_DATA = {
       description: "A real-time password strength checker that analyzes security, provides visual feedback, and suggests strong passwords.",
       tech: ["HTML", "CSS", "JavaScript"],
       demoLink: "https://barathsk-424.github.io/Password-Strength-Analyzer/",
+      image: passwordImg,
       color: "from-blue-500 to-cyan-500"
     }
   ],
@@ -402,7 +405,7 @@ export default function App() {
                 <a href="#contact" className="px-10 py-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white rounded-xl font-bold transition-all shadow-xl hover:shadow-blue-500/40 flex items-center gap-2">
                   Get In Touch <ChevronRight size={18} />
                 </a>
-                <a href={resumePDF} download="Barath_Resume.pdf" className="px-10 py-4 glass text-slate-800 dark:text-white rounded-xl font-bold border border-white/40 hover:bg-white/30 dark:hover:bg-navy-800/60 transition-all flex items-center gap-2">
+                <a href="/portfolio/resume.pdf" download="Barath_Resume.pdf" className="px-10 py-4 glass text-slate-800 dark:text-white rounded-xl font-bold border border-white/40 hover:bg-white/30 dark:hover:bg-navy-800/60 transition-all flex items-center gap-2">
                   <Download size={18} /> Download Resume
                 </a>
               </div>
@@ -534,28 +537,38 @@ export default function App() {
                 transition={{ delay: idx * 0.2 }}
               >
                 <TiltCard className="h-full">
-                  <div className="glass-card h-full rounded-3xl p-8 flex flex-col group overflow-hidden relative">
-                    {/* Background glow decoration */}
-                    <div className={`absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br ${project.color} opacity-10 dark:opacity-20 blur-[50px] group-hover:opacity-30 transition-opacity duration-500`}></div>
-                    
-                    <h3 className="text-2xl font-bold mb-4 relative z-10">{project.title}</h3>
-                    <p className="text-slate-600 dark:text-slate-400 mb-8 flex-1 relative z-10 leading-relaxed">
-                      {project.description}
-                    </p>
-                    
-                    <div className="space-y-6 relative z-10">
-                      <div className="flex flex-wrap gap-2">
-                        {project.tech.map(t => (
-                          <span key={t} className="text-xs font-semibold px-3 py-1 bg-slate-100 dark:bg-navy-800 rounded-md text-slate-700 dark:text-slate-300">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
+                  <div className="glass-card h-full rounded-3xl flex flex-col group overflow-hidden relative">
+                    {/* Project Image */}
+                    <div className="h-52 overflow-hidden relative">
+                      <img 
+                        src={project.image} 
+                        alt={project.title} 
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className={`absolute inset-0 bg-gradient-to-t from-white/90 dark:from-navy-950/90 to-transparent z-10`}></div>
+                      <div className={`absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br ${project.color} opacity-20 dark:opacity-40 blur-[50px] group-hover:opacity-60 transition-opacity duration-500`}></div>
+                    </div>
+
+                    <div className="p-8 pt-4 flex flex-col flex-1 relative z-20">
+                      <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
+                      <p className="text-slate-600 dark:text-slate-400 mb-8 flex-1 leading-relaxed">
+                        {project.description}
+                      </p>
                       
-                      <div className="flex gap-4 pt-4 border-t border-slate-200 dark:border-navy-700/50">
-                        <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium hover:text-cyan-500 transition-colors">
-                          <ExternalLink size={16} /> Live Demo
-                        </a>
+                      <div className="space-y-6">
+                        <div className="flex flex-wrap gap-2">
+                          {project.tech.map(t => (
+                            <span key={t} className="text-xs font-semibold px-3 py-1 bg-slate-100 dark:bg-navy-800 rounded-md text-slate-700 dark:text-slate-300">
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                        
+                        <div className="flex gap-4 pt-4 border-t border-slate-200 dark:border-navy-700/50">
+                          <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium hover:text-cyan-500 transition-colors">
+                            <ExternalLink size={16} /> Live Demo
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -624,7 +637,7 @@ export default function App() {
               { 
                 name: 'Resume', 
                 icon: Download, 
-                link: resumePDF, 
+                link: '/portfolio/resume.pdf', 
                 color: 'from-cyan-500 to-blue-400', 
                 description: 'Download full professional CV', 
                 download: true 
