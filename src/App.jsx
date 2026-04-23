@@ -407,7 +407,7 @@ export default function App() {
                 <a href="#contact" className="px-10 py-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white rounded-xl font-bold transition-all shadow-xl hover:shadow-blue-500/40 flex items-center gap-2">
                   Get In Touch <ChevronRight size={18} />
                 </a>
-                <a href="/portfolio/resume.pdf" download="Barath_Resume.pdf" className="px-10 py-4 glass text-slate-800 dark:text-white rounded-xl font-bold border border-white/40 hover:bg-white/30 dark:hover:bg-navy-800/60 transition-all flex items-center gap-2">
+                <a href={`${import.meta.env.BASE_URL}resume.pdf`} download="Barath_Resume.pdf" className="px-10 py-4 glass text-slate-800 dark:text-white rounded-xl font-bold border border-white/40 hover:bg-white/30 dark:hover:bg-navy-800/60 transition-all flex items-center gap-2">
                   <Download size={18} /> Download Resume
                 </a>
               </div>
@@ -639,7 +639,7 @@ export default function App() {
               { 
                 name: 'Resume', 
                 icon: Download, 
-                link: '/portfolio/resume.pdf', 
+                link: `${import.meta.env.BASE_URL}resume.pdf`, 
                 color: 'from-cyan-500 to-blue-400', 
                 description: 'Download full professional CV', 
                 download: true 
