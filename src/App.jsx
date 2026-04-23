@@ -322,22 +322,24 @@ export default function App() {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    // Replace these with your actual EmailJS credentials
+    // EmailJS Credentials (Aligned with your template)
     const SERVICE_ID = 'service_qrd9fhl';
     const TEMPLATE_ID = 'template_ahyv0zj';
     const PUBLIC_KEY = '9SybhA2da93ikIGXf';
 
+    // Using sendForm ensures that name attributes in HTML map to {{variable}} in EmailJS
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
       .then((result) => {
-          console.log(result.text);
+          console.log('SUCCESS!', result.text);
           setSubmitStatus('success');
-          reset();
+          reset(); // Clears form after successful submission
       }, (error) => {
-          console.log(error.text);
+          console.log('FAILED...', error.text);
           setSubmitStatus('error');
       })
       .finally(() => {
           setIsSubmitting(false);
+          // Hide status message after 5 seconds
           setTimeout(() => setSubmitStatus(null), 5000);
       });
   };
@@ -734,28 +736,31 @@ export default function App() {
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Name</label>
                   <input
-                    name="name"
-                    {...register("name", { required: true })}
+                    {...register("name", { required: "Name is required" })}
                     className="w-full bg-white/50 dark:bg-navy-950/50 border border-slate-200 dark:border-navy-700 rounded-xl px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all dark:text-white"
                     placeholder="John Doe"
                   />
-                  {errors.name && <span className="text-red-500 text-xs mt-1">Name is required</span>}
+                  {errors.name && <span className="text-red-500 text-xs mt-1">{errors.name.message}</span>}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email</label>
                   <input
-                    name="email"
-                    {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+                    {...register("email", { 
+                      required: "Email is required", 
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "Invalid email address"
+                      }
+                    })}
                     className="w-full bg-white/50 dark:bg-navy-950/50 border border-slate-200 dark:border-navy-700 rounded-xl px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all dark:text-white"
                     placeholder="john@example.com"
                   />
-                  {errors.email && <span className="text-red-500 text-xs mt-1">Valid email is required</span>}
+                  {errors.email && <span className="text-red-500 text-xs mt-1">{errors.email.message}</span>}
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Subject</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Subject (Optional)</label>
                 <input
-                  name="subject"
                   {...register("subject")}
                   className="w-full bg-white/50 dark:bg-navy-950/50 border border-slate-200 dark:border-navy-700 rounded-xl px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all dark:text-white"
                   placeholder="Internship Opportunity"
@@ -764,13 +769,12 @@ export default function App() {
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Message</label>
                 <textarea
-                  name="message"
-                  {...register("message", { required: true })}
+                  {...register("message", { required: "Message is required" })}
                   rows="4"
                   className="w-full bg-white/50 dark:bg-navy-950/50 border border-slate-200 dark:border-navy-700 rounded-xl px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all dark:text-white resize-none"
                   placeholder="Hello Barath..."
                 />
-                {errors.message && <span className="text-red-500 text-xs mt-1">Message is required</span>}
+                {errors.message && <span className="text-red-500 text-xs mt-1">{errors.message.message}</span>}
               </div>
               <button
                 type="submit"
