@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import emailjs from 'emailjs-com';
-import profileImg from './assets/profile.jpg';
+import profileImg from './assets/barath.png';
 import bakeryImg from './assets/bakery.png';
 import passwordImg from './assets/password.png';
 
